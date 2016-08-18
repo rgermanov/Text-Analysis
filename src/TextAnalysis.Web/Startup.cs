@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using TextAnalysis.Web.Domain.Data;
 
 namespace TextAnalysis.Web
 {
@@ -30,6 +32,9 @@ namespace TextAnalysis.Web
         {
             // Add framework services.
             services.AddMvc();
+            
+            string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
+            services.AddDbContext<ArticlesContext>(options => options.UseNpgsql(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
