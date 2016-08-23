@@ -10,7 +10,9 @@ namespace TextAnalysis.Web.Domain.Data
             base(options)
         {}
         
-        public DbSet<Article> Articles { get; set; }
+        public DbSet<ResourceContent> Resources { get; set; }
+
+        public DbSet<ResourceUrl> ResourceUrls { get; set; }
         
         protected override void OnModelCreating(ModelBuilder  modelBuilder)
         {

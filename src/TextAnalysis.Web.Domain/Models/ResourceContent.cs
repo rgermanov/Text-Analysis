@@ -1,10 +1,8 @@
-using System;
-
 namespace TextAnalysis.Web.Domain.Models
 {
-    public class Article 
+    public class ResourceContent
     {
-        public Guid Id { get; set; }
+        public string Key { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
     }
