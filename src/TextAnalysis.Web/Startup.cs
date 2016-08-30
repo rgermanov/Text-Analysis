@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using TextAnalysis.Web.Domain.Data;
+using TextAnalysis.Web.Domain.Contracts;
+using TextAnalysis.Web.Domain.Repositories;
+using TextAnalysis.Web.Domain.Models;
 
 namespace TextAnalysis.Web
 {
@@ -31,6 +34,11 @@ namespace TextAnalysis.Web
             
             string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
             services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
+            
+            //TODO: Map the Generic repository.
+            services.AddScoped<IResourcesRepository<ResourceUrl>, ResourcesRepository<ResourceUrl>>();
+            services.AddScoped<IResourcesRepository<ResourceContent>, ResourcesRepository<ResourceContent>>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
