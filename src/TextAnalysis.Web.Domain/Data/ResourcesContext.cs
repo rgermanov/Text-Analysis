@@ -4,9 +4,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace TextAnalysis.Web.Domain.Data
 {
-    public class ArticlesContext : DbContext
+    public class ResourcesContext : DbContext
     {
-        public ArticlesContext(DbContextOptions<ArticlesContext> options) :
+        public ResourcesContext(DbContextOptions<ResourcesContext> options) :
             base(options)
         {}
         

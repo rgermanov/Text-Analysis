@@ -30,7 +30,7 @@ namespace TextAnalysis.Web
             services.AddMvc();
             
             string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
-            services.AddDbContext<ArticlesContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

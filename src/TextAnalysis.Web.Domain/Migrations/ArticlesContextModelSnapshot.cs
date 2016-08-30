@@ -5,7 +5,7 @@ using TextAnalysis.Web.Domain.Data;
 
 namespace TextAnalysis.Web.Domain.Migrations
 {
-    [DbContext(typeof(ArticlesContext))]
+    [DbContext(typeof(ResourcesContext))]
     partial class ArticlesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

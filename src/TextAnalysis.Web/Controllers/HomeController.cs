@@ -5,9 +5,9 @@ namespace TextAnalysis.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ArticlesContext _context;
+        private readonly ResourcesContext _context;
         
-        public HomeController(ArticlesContext context)
+        public HomeController(ResourcesContext context)
         {
             _context = context;    
         }

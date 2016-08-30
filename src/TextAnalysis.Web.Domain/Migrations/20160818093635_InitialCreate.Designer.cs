@@ -6,7 +6,7 @@ using TextAnalysis.Web.Domain.Data;
 
 namespace TextAnalysis.Web.Domain.Migrations
 {
-    [DbContext(typeof(ArticlesContext))]
+    [DbContext(typeof(ResourcesContext))]
     [Migration("20160818093635_InitialCreate")]
     partial class InitialCreate
     {
