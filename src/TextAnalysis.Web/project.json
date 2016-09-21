@@ -24,7 +24,9 @@
     
     "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final",
     
-    "TextAnalysis.Web.Domain" : "1.0.0-*"
+    "TextAnalysis.Web.Domain" : {
+      "target": "project"
+    }
   },
 
   "tools": {
