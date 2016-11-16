@@ -9,13 +9,16 @@ namespace TextAnalysis.Web.Controllers
     {
         private readonly IResourcesRepository<ResourceUrl> _urlRepository;
         private readonly IResourcesRepository<ResourceContent> _contentRepository;        
+        private readonly IUniqueIdentifierProvider _uniqueIdentifierProvider;
         
         public ArticlesController (
                 IResourcesRepository<ResourceUrl> urlRepository,
-                IResourcesRepository<ResourceContent> contentRepository)
+                IResourcesRepository<ResourceContent> contentRepository,
+                IUniqueIdentifierProvider uniqueIdentifierProvider)
         {
             _urlRepository = urlRepository;
             _contentRepository = contentRepository;
+            _uniqueIdentifierProvider = uniqueIdentifierProvider;
         }
 
         [HttpPost]
@@ -29,7 +32,7 @@ namespace TextAnalysis.Web.Controllers
             */
             var resourceUrl = new ResourceUrl() 
             {
-                Key = this.GenerateUrlKey(),
+                Key = this.GenerateUrlKey(url),
                 Url = url
             };
 
@@ -37,20 +40,27 @@ namespace TextAnalysis.Web.Controllers
 
             //TODO: Fetch the resource from Generic Provider
             // and return the title and the content
-            var resourceContent = new ResourceContent
-            {
-                Key = resourceUrl.Key,
-                //Title =     
-            };
+            // var resourceContent = new ResourceContent
+            // {
+            //     Key = resourceUrl.Key,
+            //     //Title =     
+            // };
 
-            _contentRepository.Add(resourceContent);
+            // _contentRepository.Add(resourceContent);
 
-            return Ok(resourceContent);
+            return Ok(resourceUrl);
         }
 
-        private string GenerateUrlKey()
+        private string GenerateUrlKey(string url)
         {
             throw new NotImplementedException();
+            
+            // 1. Lower all cases of the url
+            
+            // 2. Generate Hash.
+            var uniqueId = _uniqueIdentifierProvider.Generate(url.ToLower());
+            
+            return uniqueId;
         }
     }
 }

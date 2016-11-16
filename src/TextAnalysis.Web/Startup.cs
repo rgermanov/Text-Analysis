@@ -35,9 +35,9 @@ namespace TextAnalysis.Web
             string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
             services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
             
-            //TODO: Map the Generic repository.
-            services.AddScoped<IResourcesRepository<ResourceUrl>, ResourcesRepository<ResourceUrl>>();
-            services.AddScoped<IResourcesRepository<ResourceContent>, ResourcesRepository<ResourceContent>>();
+            services.AddScoped(typeof(IResourcesRepository<>), typeof(ResourcesRepository<>));
+            
+            services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
             
         }
 
