@@ -5,6 +5,7 @@ using TextAnalysis.Web.Domain.Models;
 
 namespace TextAnalysis.Web.Controllers
 {
+    [Route("api/[controller]")]
     public class ArticlesController : Controller
     {
         private readonly IResourcesRepository<ResourceUrl> _urlRepository;
@@ -19,6 +20,12 @@ namespace TextAnalysis.Web.Controllers
             _urlRepository = urlRepository;
             _contentRepository = contentRepository;
             _uniqueIdentifierProvider = uniqueIdentifierProvider;
+        }
+
+        [HttpGet]
+        public IActionResult Get() 
+        {            
+            return Ok(new { articleUrl = "https://google.com"});
         }
 
         [HttpPost]
@@ -50,14 +57,9 @@ namespace TextAnalysis.Web.Controllers
 
             return Ok(resourceUrl);
         }
-
+        
         private string GenerateUrlKey(string url)
-        {
-            throw new NotImplementedException();
-            
-            // 1. Lower all cases of the url
-            
-            // 2. Generate Hash.
+        {            
             var uniqueId = _uniqueIdentifierProvider.Generate(url.ToLower());
             
             return uniqueId;
