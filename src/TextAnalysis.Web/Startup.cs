@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using TextAnalysis.Web.Domain.Data;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Repositories;
-using TextAnalysis.Web.Domain.Models;
 
 namespace TextAnalysis.Web
 {

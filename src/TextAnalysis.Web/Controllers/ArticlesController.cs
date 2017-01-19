@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Models;

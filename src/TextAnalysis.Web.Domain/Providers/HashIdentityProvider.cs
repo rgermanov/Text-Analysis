@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using HashidsNet;
-using TextAnalysis.Web.Domain.Contracts;
 
 public class HashIdentityProvider: IUniqueIdentifierProvider 
 {
