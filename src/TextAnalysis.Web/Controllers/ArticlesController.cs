@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Models;
+using TextAnalysis.Web.Models;
 
 namespace TextAnalysis.Web.Controllers
 {
@@ -28,31 +29,15 @@ namespace TextAnalysis.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(string url)
+        public IActionResult Post(ArticleModel model)
         {
-            /*
-                1. Generate unique key from the url.
-                2. Insert the url into a table.
-                3. 
-
-            */
             var resourceUrl = new ResourceUrl() 
             {
-                Key = this.GenerateUrlKey(url),
-                Url = url
+                Key = this.GenerateUrlKey(model.Url),
+                Url = model.Url
             };
 
             _urlRepository.Add(resourceUrl);
-
-            //TODO: Fetch the resource from Generic Provider
-            // and return the title and the content
-            // var resourceContent = new ResourceContent
-            // {
-            //     Key = resourceUrl.Key,
-            //     //Title =     
-            // };
-
-            // _contentRepository.Add(resourceContent);
 
             return Ok(resourceUrl);
         }
