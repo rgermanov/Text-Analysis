@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using TextAnalysis.Web.Domain.Data;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Repositories;
-using FluentValidation.AspNetCore;
+using TextAnalysis.Web.Domain.Providers;
 
 namespace TextAnalysis.Web
 {
@@ -30,17 +30,15 @@ namespace TextAnalysis.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
-
-            services.AddFluentValidation(s => s.RegisterValidatorsFromAssemblyContaining<Startup>());
+            services.AddMvc();            
             
-
             string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
             services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
             
             services.AddScoped(typeof(IResourcesRepository<>), typeof(ResourcesRepository<>));
             
-            services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
+            // services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
+            services.AddScoped<IUniqueIdentifierProvider, Md5IdentifierProvider>();            
             
         }
 

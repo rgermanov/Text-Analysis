@@ -10,10 +10,10 @@ namespace TextAnalysis.Web.Controllers
     public class ArticlesController : Controller
     {
         private readonly IResourcesRepository<ResourceUrl> _urlRepository;
-        private readonly IResourcesRepository<ResourceContent> _contentRepository;        
+        private readonly IResourcesRepository<ResourceContent> _contentRepository;
         private readonly IUniqueIdentifierProvider _uniqueIdentifierProvider;
-        
-        public ArticlesController (
+
+        public ArticlesController(
                 IResourcesRepository<ResourceUrl> urlRepository,
                 IResourcesRepository<ResourceContent> contentRepository,
                 IUniqueIdentifierProvider uniqueIdentifierProvider)
@@ -24,21 +24,22 @@ namespace TextAnalysis.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get() 
-        {            
-            return Ok(new { articleUrl = "https://google.com"});
+        public IActionResult Get()
+        {
+            return Ok(new { articleUrl = "https://google.com" });
         }
 
         [HttpPost]
-        public IActionResult Post(ArticleModel model)
+        public IActionResult Create([FromBody]ArticleModel model)
         {
             var validator = new ArticleModelValidator();
             var validationResult = validator.Validate(model);
-            if (!validationResult.IsValid) {
+            if (!validationResult.IsValid)
+            {
                 return BadRequest(validationResult.Errors);
             }
-            
-            var resourceUrl = new ResourceUrl() 
+
+            var resourceUrl = new ResourceUrl()
             {
                 Key = this.GenerateUrlKey(model.Url),
                 Url = model.Url
@@ -48,11 +49,11 @@ namespace TextAnalysis.Web.Controllers
 
             return Ok(resourceUrl);
         }
-        
+
         private string GenerateUrlKey(string url)
-        {            
+        {
             var uniqueId = _uniqueIdentifierProvider.Generate(url.ToLower());
-            
+
             return uniqueId;
         }
     }
