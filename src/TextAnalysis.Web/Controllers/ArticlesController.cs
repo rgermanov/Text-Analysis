@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Models;
 using TextAnalysis.Web.Models;
+using TextAnalysis.Web.Models.Validators;
 
 namespace TextAnalysis.Web.Controllers
 {
@@ -31,6 +32,12 @@ namespace TextAnalysis.Web.Controllers
         [HttpPost]
         public IActionResult Post(ArticleModel model)
         {
+            var validator = new ArticleModelValidator();
+            var validationResult = validator.Validate(model);
+            if (!validationResult.IsValid) {
+                return BadRequest(validationResult.Errors);
+            }
+            
             var resourceUrl = new ResourceUrl() 
             {
                 Key = this.GenerateUrlKey(model.Url),

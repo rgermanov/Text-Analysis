@@ -10,7 +10,7 @@
     },
     "tasks": [
         {
-            "taskName": "build",
+            "taskName": "build",            
             "args": [],
             "isBuildCommand": true,
             "showOutput": "always",

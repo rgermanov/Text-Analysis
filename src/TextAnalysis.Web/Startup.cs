@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using TextAnalysis.Web.Domain.Data;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Repositories;
+using FluentValidation.AspNetCore;
 
 namespace TextAnalysis.Web
 {
@@ -18,9 +19,9 @@ namespace TextAnalysis.Web
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables();                
                 
-            Configuration = builder.Build();
+            Configuration = builder.Build();            
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -30,7 +31,10 @@ namespace TextAnalysis.Web
         {
             // Add framework services.
             services.AddMvc();
+
+            services.AddFluentValidation(s => s.RegisterValidatorsFromAssemblyContaining<Startup>());
             
+
             string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
             services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
             
