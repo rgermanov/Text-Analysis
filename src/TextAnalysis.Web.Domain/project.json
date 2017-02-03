@@ -3,8 +3,9 @@
   "buildOptions": {
     "debugType": "portable"
   },
-  "dependencies": {
+  "dependencies": {    
     "NETStandard.Library": "1.6.0",
+    "Npgsql": "3.2.0",
     "Npgsql.EntityFrameworkCore.PostgreSQL": "1.0.1",
     "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.0.1",
     "Hashids.net": "1.2.2",
