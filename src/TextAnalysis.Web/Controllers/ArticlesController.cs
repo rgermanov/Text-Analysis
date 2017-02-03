@@ -26,7 +26,9 @@ namespace TextAnalysis.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(new { articleUrl = "https://google.com" });
+            var links = _urlRepository.FilterBy(item => true);
+
+            return Ok(links);
         }
 
         [HttpPost]

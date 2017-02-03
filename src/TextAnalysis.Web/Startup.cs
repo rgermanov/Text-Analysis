@@ -35,7 +35,8 @@ namespace TextAnalysis.Web
             string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
             services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
             
-            services.AddScoped(typeof(IResourcesRepository<>), typeof(ResourcesRepository<>));
+            // services.AddScoped(typeof(IResourcesRepository<>), typeof(ResourcesRepository<>));
+            services.AddScoped(typeof(IResourcesRepository<>), typeof(InMemoryRepository<>));            
             
             // services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
             services.AddScoped<IUniqueIdentifierProvider, Md5IdentifierProvider>();            
