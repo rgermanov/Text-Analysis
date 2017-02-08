@@ -1,4 +1,6 @@
+using System.Security.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Models;
 using TextAnalysis.Web.Models;
@@ -26,9 +28,30 @@ namespace TextAnalysis.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var links = _urlRepository.FilterBy(item => true);
+            // string connectionString = @"mongodb://text-analysis:LMelMAxJfacoTwjNDw6YBS2bpTvZeyKStOU4ffmwgrZ0yi91vxaToLAQTQr8Dbm4qQZvEW0qWpsp9AgpmCgIig==@text-analysis.documents.azure.com:10250/?ssl=true&sslverifycertificate=false";
+            string connectionString = @"mongodb://text-analysis:text-analysis123@ds145009.mlab.com:45009/text-analysis-dev";
+            
+            MongoClientSettings settings = MongoClientSettings.FromUrl(
+              new MongoUrl(connectionString)
+            );
+            settings.SslSettings = new SslSettings()
+            {
+                EnabledSslProtocols = SslProtocols.Tls12
+            };
 
-            return Ok(links);
+            var mongoClient = new MongoClient(settings);
+
+            var database = mongoClient.GetDatabase("web-pages");
+
+            var collection = database.GetCollection<ResourceUrl>("urls");
+
+            var items = collection.AsQueryable().ToList();
+
+            return Ok(items);
+
+            // var links = _urlRepository.FilterBy(item => true);
+
+            // return Ok(links);
         }
 
         [HttpPost]

@@ -23,8 +23,10 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
     "Microsoft.EntityFrameworkCore.Design": "1.1.0-*",
     
-    "TextAnalysis.Web.Domain": "1.0.0-*",    
-    "FluentValidation.AspNetCore": "6.4.0-beta9"    
+    "FluentValidation.AspNetCore": "6.4.0-beta9",    
+    "MongoDB.Driver": "2.4.2",
+
+    "TextAnalysis.Web.Domain": "1.0.0-*"
   },
   "tools": {
     "BundlerMinifier.Core": "2.0.238",
