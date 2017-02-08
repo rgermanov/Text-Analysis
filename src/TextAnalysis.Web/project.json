@@ -23,7 +23,8 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
     "Microsoft.EntityFrameworkCore.Design": "1.1.0-*",
     "FluentValidation": "6.4.0-beta9",
-    "TextAnalysis.Web.Domain" : {
+    "MongoDB.Driver": "2.4.2",
+    "TextAnalysis.Web.Domain": {
       "target": "project"
     }
   },
