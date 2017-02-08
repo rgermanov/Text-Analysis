@@ -27,31 +27,10 @@ namespace TextAnalysis.Web.Controllers
 
         [HttpGet]
         public IActionResult Get()
-        {
-            // string connectionString = @"mongodb://text-analysis:LMelMAxJfacoTwjNDw6YBS2bpTvZeyKStOU4ffmwgrZ0yi91vxaToLAQTQr8Dbm4qQZvEW0qWpsp9AgpmCgIig==@text-analysis.documents.azure.com:10250/?ssl=true&sslverifycertificate=false";
-            string connectionString = @"mongodb://text-analysis:text-analysis123@ds145009.mlab.com:45009/text-analysis-dev";
-            
-            MongoClientSettings settings = MongoClientSettings.FromUrl(
-              new MongoUrl(connectionString)
-            );
-            settings.SslSettings = new SslSettings()
-            {
-                EnabledSslProtocols = SslProtocols.Tls12
-            };
+        {                        
+            var links = _urlRepository.FilterBy(item => true);
 
-            var mongoClient = new MongoClient(settings);
-
-            var database = mongoClient.GetDatabase("text-analysis-dev");
-
-            var collection = database.GetCollection<ResourceUrl>("urls");
-
-            var items = collection.AsQueryable().ToList();
-
-            return Ok(items);
-
-            // var links = _urlRepository.FilterBy(item => true);
-
-            // return Ok(links);
+            return Ok(links);
         }
 
         [HttpPost]

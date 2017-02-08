@@ -36,7 +36,9 @@ namespace TextAnalysis.Web
             services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
             
             // services.AddScoped(typeof(IResourcesRepository<>), typeof(ResourcesRepository<>));
-            services.AddSingleton(typeof(IResourcesRepository<>), typeof(InMemoryRepository<>));            
+            // services.AddSingleton(typeof(IResourcesRepository<>), typeof(InMemoryRepository<>));    
+            services.AddSingleton(typeof(IResourcesRepository<>), typeof(MongoRepository<>));            
+                    
             
             // services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
             services.AddScoped<IUniqueIdentifierProvider, Md5IdentifierProvider>();            
