@@ -1,18 +1,17 @@
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using TextAnalysis.Web.Domain.Contracts;
 
 namespace TextAnalysis.Web.Domain.Repositories
 {
-    public class ResourcesRepository<TEntity> : IResourcesRepository<TEntity>
+    public class ResourcesRepository<TEntity> : IResourcesRepository<TEntity> where TEntity : IEntity
     {
         void IResourcesRepository<TEntity>.Add(TEntity entity)
         {
             throw new NotImplementedException();
         }
 
-        IQueryable<TEntity> IResourcesRepository<TEntity>.FilterBy(Expression<Func<bool, TEntity>> filter)
+        IQueryable<TEntity> IResourcesRepository<TEntity>.FilterBy(Func<TEntity, bool> filter)
         {
             throw new NotImplementedException();
         }

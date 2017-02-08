@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using TextAnalysis.Web.Domain.Data;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Repositories;
-using TextAnalysis.Web.Domain.Models;
+using TextAnalysis.Web.Domain.Providers;
 
 namespace TextAnalysis.Web
 {
@@ -19,9 +19,9 @@ namespace TextAnalysis.Web
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables();                
                 
-            Configuration = builder.Build();
+            Configuration = builder.Build();            
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -30,14 +30,16 @@ namespace TextAnalysis.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc();            
             
             string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
             services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
             
-            //TODO: Map the Generic repository.
-            services.AddScoped<IResourcesRepository<ResourceUrl>, ResourcesRepository<ResourceUrl>>();
-            services.AddScoped<IResourcesRepository<ResourceContent>, ResourcesRepository<ResourceContent>>();
+            // services.AddScoped(typeof(IResourcesRepository<>), typeof(ResourcesRepository<>));
+            services.AddSingleton(typeof(IResourcesRepository<>), typeof(InMemoryRepository<>));            
+            
+            // services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
+            services.AddScoped<IUniqueIdentifierProvider, Md5IdentifierProvider>();            
             
         }
 
@@ -58,7 +60,7 @@ namespace TextAnalysis.Web
             }
 
             app.UseStaticFiles();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

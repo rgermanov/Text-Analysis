@@ -1,8 +1,9 @@
 using System;
+using TextAnalysis.Web.Domain.Contracts;
 
 namespace TextAnalysis.Web.Domain.Models
 {
-    public class ResourceFetch 
+    public class ResourceFetch : IEntity
     {
         public string Key { get; set; }
 

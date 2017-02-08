@@ -5,12 +5,15 @@
     "command": "dotnet",
     "isShellCommand": true,
     "args": [],
+    "options": {
+        "cwd": "${workspaceRoot}/src/TextAnalysis.Web"
+    },
     "tasks": [
         {
-            "taskName": "build",
-            "args": [ "./src/TextAnalysis.Web" ],
+            "taskName": "build",            
+            "args": [],
             "isBuildCommand": true,
-            "showOutput": "silent",
+            "showOutput": "always",
             "problemMatcher": "$msCompile"
         }
     ]

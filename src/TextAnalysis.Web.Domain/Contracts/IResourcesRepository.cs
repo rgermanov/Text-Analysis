@@ -2,14 +2,14 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace TextAnalysis.Web.Domain.Contracts 
+namespace TextAnalysis.Web.Domain.Contracts
 {
-    public interface IResourcesRepository<TEntity> 
+    public interface IResourcesRepository<TEntity> where TEntity : IEntity
     {
         IQueryable<TEntity> Get(string resourceId);
 
-        IQueryable<TEntity> FilterBy(Expression<Func<bool, TEntity>> filter);
+        IQueryable<TEntity> FilterBy(Func<TEntity, bool> filter);
 
-        void Add(TEntity entity);        
+        void Add(TEntity entity);
     }
 }
