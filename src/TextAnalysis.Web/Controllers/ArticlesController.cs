@@ -41,7 +41,7 @@ namespace TextAnalysis.Web.Controllers
 
             var mongoClient = new MongoClient(settings);
 
-            var database = mongoClient.GetDatabase("web-pages");
+            var database = mongoClient.GetDatabase("text-analysis-dev");
 
             var collection = database.GetCollection<ResourceUrl>("urls");
 
