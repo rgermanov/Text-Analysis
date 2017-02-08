@@ -1,6 +1,5 @@
-using System.Security.Authentication;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Models;
 using TextAnalysis.Web.Models;
@@ -28,7 +27,7 @@ namespace TextAnalysis.Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {                        
-            var links = _urlRepository.FilterBy(item => true);
+            var links = _urlRepository.FilterBy(url => !string.IsNullOrWhiteSpace(url.Url)).ToList();
 
             return Ok(links);
         }

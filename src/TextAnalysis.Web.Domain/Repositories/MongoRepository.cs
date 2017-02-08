@@ -14,26 +14,18 @@ namespace TextAnalysis.Web.Domain.Repositories
         private const string ConnectionString = @"mongodb://text-analysis:text-analysis123@ds145009.mlab.com:45009/text-analysis-dev";
         public void Add(TEntity entity)
         {
-            var mongoClient = this.CreateMongoClient();
-
-            var database = mongoClient.GetDatabase("text-analysis-dev");
-
-            var collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
+            var collection = this.GetCollection();            
 
             collection.InsertOne(entity);
         }
 
         public IEnumerable<TEntity> FilterBy(Expression<Func<TEntity, bool>> filter)
         {
-            var mongoClient = this.CreateMongoClient();
+            var collection = this.GetCollection();
 
-            var database = mongoClient.GetDatabase("text-analysis-dev");
+            var items = collection.AsQueryable<TEntity>().Where(filter.Compile());
 
-            var collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
-
-            var items = collection.Find(filter);
-
-            return items.ToEnumerable();
+            return items.AsEnumerable();
         }
 
         public IEnumerable<TEntity> Get(string resourceId)
@@ -54,6 +46,17 @@ namespace TextAnalysis.Web.Domain.Repositories
             var mongoClient = new MongoClient(settings);
 
             return mongoClient;
+        }
+
+        private IMongoCollection<TEntity> GetCollection()
+        {
+            var mongoClient = this.CreateMongoClient();
+
+            var database = mongoClient.GetDatabase("text-analysis-dev");
+
+            var collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
+
+            return collection;
         }
     }
 }
