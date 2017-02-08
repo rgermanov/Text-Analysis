@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Authentication;
 using MongoDB.Driver;
 using TextAnalysis.Web.Domain.Contracts;
-using TextAnalysis.Web.Domain.Models;
 
 namespace TextAnalysis.Web.Domain.Repositories
 {
@@ -22,7 +23,7 @@ namespace TextAnalysis.Web.Domain.Repositories
             collection.InsertOne(entity);
         }
 
-        public System.Linq.IQueryable<TEntity> FilterBy(Func<TEntity, bool> filter)
+        public IEnumerable<TEntity> FilterBy(Expression<Func<TEntity, bool>> filter)
         {
             var mongoClient = this.CreateMongoClient();
 
@@ -30,12 +31,12 @@ namespace TextAnalysis.Web.Domain.Repositories
 
             var collection = database.GetCollection<TEntity>(typeof(TEntity).Name);
 
-            var items = collection.AsQueryable();
+            var items = collection.Find(filter);
 
-            return items.Where(filter).AsQueryable();
+            return items.ToEnumerable();
         }
 
-        public System.Linq.IQueryable<TEntity> Get(string resourceId)
+        public IEnumerable<TEntity> Get(string resourceId)
         {
             throw new NotImplementedException();
         }
