@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Authentication;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using TextAnalysis.Web.Domain.Contracts;
 
@@ -12,6 +14,15 @@ namespace TextAnalysis.Web.Domain.Repositories
     {
         // string connectionString = @"mongodb://text-analysis:LMelMAxJfacoTwjNDw6YBS2bpTvZeyKStOU4ffmwgrZ0yi91vxaToLAQTQr8Dbm4qQZvEW0qWpsp9AgpmCgIig==@text-analysis.documents.azure.com:10250/?ssl=true&sslverifycertificate=false";       
         private const string ConnectionString = @"mongodb://text-analysis:text-analysis123@ds145009.mlab.com:45009/text-analysis-dev";
+        
+        public MongoRepository()
+        {
+            BsonClassMap.RegisterClassMap<TEntity>(cm => {
+                cm.AutoMap();
+                cm.MapIdMember(x => x.Id).SetIdGenerator(StringObjectIdGenerator.Instance);
+            });
+        }
+
         public void Add(TEntity entity)
         {
             var collection = this.GetCollection();            
