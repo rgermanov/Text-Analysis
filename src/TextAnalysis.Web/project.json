@@ -57,7 +57,7 @@
       "wwwroot",
       "Views",
       "Areas/**/Views",
-      "appsettings.json",
+      "appsettings.*.json",
       "web.config"
     ]
   },
