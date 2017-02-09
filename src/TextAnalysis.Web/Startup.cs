@@ -8,6 +8,7 @@ using TextAnalysis.Web.Domain.Data;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Repositories;
 using TextAnalysis.Web.Domain.Providers;
+using MongoDB.Driver;
 
 namespace TextAnalysis.Web
 {
@@ -35,9 +36,8 @@ namespace TextAnalysis.Web
             string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
             services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
             
-            // services.AddScoped(typeof(IResourcesRepository<>), typeof(ResourcesRepository<>));
-            // services.AddSingleton(typeof(IResourcesRepository<>), typeof(InMemoryRepository<>));    
-            services.AddSingleton(typeof(IResourcesRepository<>), typeof(MongoRepository<>));            
+            services.AddSingleton(typeof(MongoClient), new MongoClient(connectionString));            
+            services.AddScoped(typeof(IResourcesRepository<>), typeof(MongoRepository<>));            
                     
             
             // services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
