@@ -16,11 +16,6 @@ namespace TextAnalysis.Web.Domain.Repositories
         public MongoRepository(MongoClient client)
         {
             this.client = client;
-
-            BsonClassMap.RegisterClassMap<TEntity>(cm => {
-                cm.AutoMap();
-                cm.MapIdMember(x => x.Id).SetIdGenerator(StringObjectIdGenerator.Instance);
-            });
         }
 
         public void Add(TEntity entity)

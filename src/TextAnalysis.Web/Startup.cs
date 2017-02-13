@@ -22,7 +22,9 @@ namespace TextAnalysis.Web
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();                
                 
-            Configuration = builder.Build();            
+            Configuration = builder.Build();      
+
+            this.RegisterMappings();      
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -69,6 +71,12 @@ namespace TextAnalysis.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        
+        private void RegisterMappings()
+        {
+            MongoMappingsProvider.Register();
         }
     }
 }

@@ -1,7 +1,9 @@
+using MongoDB.Bson;
+
 namespace TextAnalysis.Web.Domain.Contracts 
 {
     public interface IEntity
     {
-        string Id { get; set; }
+        ObjectId Id { get; set; }
     }
 }
