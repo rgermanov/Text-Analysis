@@ -1,4 +1,5 @@
 using System.Linq;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Models;
@@ -33,6 +34,7 @@ namespace TextAnalysis.Web.Controllers
         }
 
         [HttpPost]
+        [EnableCors("AllowAllOrigins")]
         public IActionResult Create([FromBody]ArticleModel model)
         {
             var validator = new ArticleModelValidator();

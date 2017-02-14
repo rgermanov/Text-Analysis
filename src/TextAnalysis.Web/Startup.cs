@@ -31,9 +31,17 @@ namespace TextAnalysis.Web
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
             // Add framework services.
-            services.AddMvc();            
+            services.AddMvc();
+
+            // Enable CORS
+            services.AddCors(options => {
+                options
+                    .AddPolicy("AllowAllOrigins", 
+                            builder => builder.AllowAnyOrigin().AllowAnyMethod()
+                        );
+            });            
             
             string connectionString = this.Configuration.GetConnectionString("TextAnalysis");
             services.AddDbContext<ResourcesContext>(options => options.UseNpgsql(connectionString));
@@ -43,8 +51,7 @@ namespace TextAnalysis.Web
                     
             
             // services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
-            services.AddScoped<IUniqueIdentifierProvider, Md5IdentifierProvider>();            
-            
+            services.AddScoped<IUniqueIdentifierProvider, Md5IdentifierProvider>();                        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,7 +77,7 @@ namespace TextAnalysis.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            });                                  
         }
 
         

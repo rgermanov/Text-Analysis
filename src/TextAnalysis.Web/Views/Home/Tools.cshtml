@@ -1,0 +1,10 @@
+@model TextAnalysis.Web.Models.ToolsViewModel
+
+@{
+    ViewData["Title"] = "Tools";
+}
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Bookmarklets</p>
+<a href="javascript:@Model.BookmarkletScript">Save for later</a>
