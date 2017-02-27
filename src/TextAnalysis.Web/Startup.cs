@@ -9,6 +9,8 @@ using TextAnalysis.Web.Domain.Contracts;
 using TextAnalysis.Web.Domain.Repositories;
 using TextAnalysis.Web.Domain.Providers;
 using MongoDB.Driver;
+using TextAnalysis.Web.Domain.Models;
+using TextAnalysis.Web.Models;
 
 namespace TextAnalysis.Web
 {
@@ -25,6 +27,7 @@ namespace TextAnalysis.Web
             Configuration = builder.Build();      
 
             this.RegisterMappings();      
+            this.RegisterModelMappings();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -84,6 +87,13 @@ namespace TextAnalysis.Web
         private void RegisterMappings()
         {
             MongoMappingsProvider.Register();
+        }
+
+        private void RegisterModelMappings()
+        {
+            AutoMapper.Mapper.Initialize(config=>{
+                config.CreateMap<ResourceUrl, ArticleModel>();
+            });
         }
     }
 }
