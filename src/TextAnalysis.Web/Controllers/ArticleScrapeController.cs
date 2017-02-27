@@ -3,23 +3,44 @@ using Microsoft.AspNetCore.Mvc;
 using HtmlAgilityPack;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using TextAnalysis.Web.Domain.Contracts;
+using TextAnalysis.Web.Domain.Models;
+using System;
 
 namespace TextAnalysis.Web.Controllers
 {
     [Route("api/articles/scrape")]
     public class ArticlesScrapeController : Controller
     {
-        [HttpGet]
-        public IActionResult Get(string url)
+        private readonly IResourcesRepository<ResourceUrl> _urlRepository;
+
+        private readonly IResourcesRepository<ResourceContent> _contentRepository;
+
+        public ArticlesScrapeController(
+                IResourcesRepository<ResourceUrl> urlRepository,
+                IResourcesRepository<ResourceContent> contentRepository)
         {
+            _urlRepository = urlRepository;
+            _contentRepository = contentRepository; 
+        }
+
+        [HttpGet]
+        public IActionResult Get(string key)
+        {
+            var resourceUrl = _urlRepository.FilterBy(item => item.Key.Equals(key)).FirstOrDefault();
+            if (resourceUrl == null)
+            {
+                throw new ArgumentException("Resource Url doesn't not exist.");
+            }
+
             var webGet = new HtmlWeb();
-            var documentTask = webGet.LoadFromWebAsync(url);
+            var documentTask = webGet.LoadFromWebAsync(resourceUrl.Url);
 
             Task.WaitAll(documentTask);
 
-            var result = documentTask.Result;            
+            var result = documentTask.Result;
 
-            var body = result.DocumentNode.Descendants("body").FirstOrDefault();            
+            var body = result.DocumentNode.Descendants("body").FirstOrDefault();
 
             var nodesToGetText = body.ChildNodes.SelectMany(node => this.IncludeNode(node));
 
@@ -46,7 +67,7 @@ namespace TextAnalysis.Web.Controllers
                     result.Add(node);
                 }
             }
-            else if(node.ChildNodes.Any(n => n.Name == "br"))
+            else if (node.ChildNodes.Any(n => n.Name == "br"))
             {
                 if (IncludeTextNode(node))
                 {

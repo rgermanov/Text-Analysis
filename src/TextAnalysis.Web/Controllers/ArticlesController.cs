@@ -12,16 +12,13 @@ namespace TextAnalysis.Web.Controllers
     public class ArticlesController : Controller
     {
         private readonly IResourcesRepository<ResourceUrl> _urlRepository;
-        private readonly IResourcesRepository<ResourceContent> _contentRepository;
         private readonly IUniqueIdentifierProvider _uniqueIdentifierProvider;
 
         public ArticlesController(
-                IResourcesRepository<ResourceUrl> urlRepository,
-                IResourcesRepository<ResourceContent> contentRepository,
+                IResourcesRepository<ResourceUrl> urlRepository,                
                 IUniqueIdentifierProvider uniqueIdentifierProvider)
         {
-            _urlRepository = urlRepository;
-            _contentRepository = contentRepository;
+            _urlRepository = urlRepository;            
             _uniqueIdentifierProvider = uniqueIdentifierProvider;
         }
 
