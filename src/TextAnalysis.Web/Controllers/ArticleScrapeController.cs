@@ -9,7 +9,7 @@ using System;
 
 namespace TextAnalysis.Web.Controllers
 {
-    [Route("api/articles/scrape")]
+    [Route("api/articles/scrape", Name="ArticleScrape")]
     public class ArticlesScrapeController : Controller
     {
         private readonly IResourcesRepository<ResourceUrl> _urlRepository;

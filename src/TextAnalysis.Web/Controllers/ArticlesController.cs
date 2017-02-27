@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -15,19 +16,25 @@ namespace TextAnalysis.Web.Controllers
         private readonly IUniqueIdentifierProvider _uniqueIdentifierProvider;
 
         public ArticlesController(
-                IResourcesRepository<ResourceUrl> urlRepository,                
+                IResourcesRepository<ResourceUrl> urlRepository,
                 IUniqueIdentifierProvider uniqueIdentifierProvider)
         {
-            _urlRepository = urlRepository;            
+            _urlRepository = urlRepository;
             _uniqueIdentifierProvider = uniqueIdentifierProvider;
         }
 
         [HttpGet]
         public IActionResult Get()
-        {                        
+        {
             var links = _urlRepository.FilterBy(url => !string.IsNullOrWhiteSpace(url.Url)).ToList();
 
-            return Ok(links);
+            var articleModels = AutoMapper.Mapper.Map<List<ResourceUrl>, List<ArticleModel>>(links);
+            articleModels.ForEach(articleModel =>
+            {
+                articleModel.References.Add("scrape", Url.Link("ArticleScrape", new { key = articleModel.Key }));
+            });
+
+            return Ok(articleModels);
         }
 
         [HttpPost]
