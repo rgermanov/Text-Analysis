@@ -27,11 +27,12 @@ namespace TextAnalysis.Web.Controllers
         public IActionResult Get()
         {
             var links = _urlRepository.FilterBy(url => !string.IsNullOrWhiteSpace(url.Url)).ToList();
-
+           
             var articleModels = AutoMapper.Mapper.Map<List<ResourceUrl>, List<ArticleModel>>(links);
             articleModels.ForEach(articleModel =>
             {
-                articleModel.References.Add("scrape", Url.Link("ArticleScrape", new { key = articleModel.Key }));
+                articleModel.References.Add("scrape", Url.Link("ArticleScrapeGet", new { key = articleModel.Key }));
+                articleModel.References.Add("read", Url.Link("ArticleReadGet", new { key = articleModel.Key }));                
             });
 
             return Ok(articleModels);

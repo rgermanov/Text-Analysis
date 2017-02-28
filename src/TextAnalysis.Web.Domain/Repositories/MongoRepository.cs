@@ -7,7 +7,7 @@ using TextAnalysis.Web.Domain.Contracts;
 
 namespace TextAnalysis.Web.Domain.Repositories
 {
-    public class MongoRepository<TEntity> : IResourcesRepository<TEntity> where TEntity : IEntity
+    public class MongoRepository<TEntity> : IResourcesRepository<TEntity> where TEntity : IKeyEntity
     {        
         private MongoClient client;
 
@@ -32,9 +32,13 @@ namespace TextAnalysis.Web.Domain.Repositories
             return items.AsEnumerable();
         }
 
-        public IEnumerable<TEntity> Get(string resourceId)
+        public IEnumerable<TEntity> Get(string key)
         {
-            throw new NotImplementedException();
+            var collection = this.GetCollection();
+
+            var entities = collection.AsQueryable<TEntity>().Where(e => e.Key == key);
+
+            return entities;
         }
 
         private IMongoCollection<TEntity> GetCollection()
