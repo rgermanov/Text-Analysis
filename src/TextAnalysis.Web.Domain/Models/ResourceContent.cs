@@ -3,7 +3,7 @@ using TextAnalysis.Web.Domain.Contracts;
 
 namespace TextAnalysis.Web.Domain.Models
 {
-    public class ResourceContent : IEntity
+    public class ResourceContent : IKeyEntity
     {
         public ObjectId Id { get; set; }
         public string Key { get; set; }

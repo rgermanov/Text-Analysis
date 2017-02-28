@@ -54,7 +54,9 @@ namespace TextAnalysis.Web
                     
             
             // services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
-            services.AddScoped<IUniqueIdentifierProvider, Md5IdentifierProvider>();                        
+            services.AddScoped<IUniqueIdentifierProvider, Md5IdentifierProvider>();  
+
+            services.AddScoped<IResourceContentProvider, HtmlAgilityPackContentProvider>();                      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +95,7 @@ namespace TextAnalysis.Web
         {
             AutoMapper.Mapper.Initialize(config=>{
                 config.CreateMap<ResourceUrl, ArticleModel>();
+                config.CreateMap<ResourceContent, ArticleContentModel>();
             });
         }
     }

@@ -4,7 +4,7 @@ using TextAnalysis.Web.Domain.Contracts;
 
 namespace TextAnalysis.Web.Domain.Models
 {
-    public class ResourceFetch : IEntity
+    public class ResourceFetch : IKeyEntity
     {
         public ObjectId Id { get; set; }
         public string Key { get; set; }
