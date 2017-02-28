@@ -95,7 +95,8 @@ namespace TextAnalysis.Web
         {
             AutoMapper.Mapper.Initialize(config=>{
                 config.CreateMap<ResourceUrl, ArticleModel>();
-                config.CreateMap<ResourceContent, ArticleContentModel>();
+                config.CreateMap<ResourceContent, ArticleContentModel>()
+                    .ForMember(x => x.Content, opt => opt.MapFrom(d => d.Text));
             });
         }
     }

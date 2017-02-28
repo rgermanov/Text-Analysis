@@ -27,9 +27,14 @@ namespace TextAnalysis.Web.Controllers
                 return NotFound();
             }
 
-            var resourceContent = resources.OrderByDescending(item => item.Id).First();
+            var resourceContent = resources.OrderByDescending(item => item.Id);
             
-            return Ok(AutoMapper.Mapper.Map<ArticleContentModel>(resourceContent));
+            if (!resourceContent.Any())
+            {
+                return NotFound();
+            }
+            
+            return Ok(AutoMapper.Mapper.Map<ArticleContentModel>(resourceContent.First()));
         }
     }
 }

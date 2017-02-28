@@ -57,7 +57,7 @@ namespace TextAnalysis.Web.Controllers
 
             _urlRepository.Add(resourceUrl);
 
-            return Ok(resourceUrl);
+            return Ok(AutoMapper.Mapper.Map<ArticleModel>(resourceUrl));
         }
 
         private string GenerateUrlKey(string url)
