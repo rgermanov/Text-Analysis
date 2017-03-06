@@ -1,7 +1,7 @@
 (function () {
     var pageUrl = document.location.href;
     var http = new XMLHttpRequest();
-    var postUrl = "http://localhost:5000/api/articles";
+    var postUrl = "http://text-analysis.azurewebsites.net/api/articles";
     var data = { url: pageUrl };
 
     http.open("POST", postUrl, true);
