@@ -12,7 +12,8 @@
     "System.Security.Cryptography.Algorithms": "4.3.0",
     "MongoDB.Driver": "2.4.2",
     "MongoDB.Bson": "2.4.2",
-    "HtmlAgilityPack": "1.4.9.5"
+    "HtmlAgilityPack": "1.4.9.5",
+    "Google.Cloud.Language.V1": "1.0.0-beta05"
   },
   "frameworks": {
     "netcoreapp1.0": {

@@ -11,6 +11,7 @@ using TextAnalysis.Web.Domain.Providers;
 using MongoDB.Driver;
 using TextAnalysis.Web.Domain.Models;
 using TextAnalysis.Web.Models;
+using TextAnalysis.Web.Domain.TextAnalyzers;
 
 namespace TextAnalysis.Web
 {
@@ -56,7 +57,9 @@ namespace TextAnalysis.Web
             // services.AddScoped<IUniqueIdentifierProvider, HashIdentityProvider>();
             services.AddScoped<IUniqueIdentifierProvider, Md5IdentifierProvider>();  
 
-            services.AddScoped<IResourceContentProvider, HtmlAgilityPackContentProvider>();                      
+            services.AddScoped<IResourceContentProvider, HtmlAgilityPackContentProvider>();
+
+            services.AddScoped<ITextAnalyzer, GoogleNaturalLanguageTextAnalyzer>();                      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

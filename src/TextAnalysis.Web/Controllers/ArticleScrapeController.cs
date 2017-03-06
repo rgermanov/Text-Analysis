@@ -13,15 +13,19 @@ namespace TextAnalysis.Web.Controllers
         private readonly IResourcesRepository<ResourceUrl> _urlRepository;
         private readonly IResourcesRepository<ResourceContent> _contentRepository;
         private readonly IResourceContentProvider _resourceContentProvider;
+        private readonly ITextAnalyzer _textAnalyzer;
+        
 
         public ArticlesScrapeController(
                 IResourcesRepository<ResourceUrl> urlRepository,
                 IResourcesRepository<ResourceContent> contentRepository,
-                IResourceContentProvider resourceContentProvider)
+                IResourceContentProvider resourceContentProvider,
+                ITextAnalyzer textAnalyzer)
         {
             _urlRepository = urlRepository;
             _contentRepository = contentRepository; 
             _resourceContentProvider = resourceContentProvider;
+            _textAnalyzer = textAnalyzer;
         }
 
         [HttpGet]
@@ -44,7 +48,9 @@ namespace TextAnalysis.Web.Controllers
 
             _contentRepository.Add(resourceContent);
 
-            return Ok(AutoMapper.Mapper.Map<ArticleContentModel>(resourceContent));
+            var analysisResult = _textAnalyzer.AlayzeHtml(resourceContent.Text);
+
+            return Ok(new { Content = AutoMapper.Mapper.Map<ArticleContentModel>(resourceContent), Analysis = analysisResult });
         }
-    }
+    }    
 }
